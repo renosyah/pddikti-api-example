@@ -65,6 +65,10 @@ var rootCmd = &cobra.Command{
 					fmt.Println("Lecture name : ", d.Nama, " Added to ", fmt.Sprintf("dosen/%s/DataUmum.csv", d.Nama))
 					if err := reqDosenDetail(d.ID, func(detail DosenDetail) {
 
+						if err := os.RemoveAll(fmt.Sprintf("dosen/%s", d.Nama)); err != nil {
+							log.Fatal(err)
+						}
+
 						if err := os.MkdirAll(fmt.Sprintf("dosen/%s", d.Nama), os.ModePerm); err != nil {
 							log.Fatal(err)
 						}
