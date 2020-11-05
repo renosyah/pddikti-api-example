@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"path/filepath"
 	"strings"
 )
 
@@ -13,25 +12,6 @@ const (
 	MODE_ADVANCE = "advance"
 )
 
-func removeDir(dir string) error {
-	d, err := os.Open(dir)
-	if err != nil {
-		return err
-	}
-	defer d.Close()
-	names, err := d.Readdirnames(-1)
-	if err != nil {
-		return err
-	}
-	for _, name := range names {
-		err = os.RemoveAll(filepath.Join(dir, name))
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 func addcol(fname string, column []string) error {
 
 	f, err := os.OpenFile(fname, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
@@ -41,7 +21,7 @@ func addcol(fname string, column []string) error {
 
 	defer f.Close()
 
-	if _, err = f.WriteString("\n" + strings.Join(column, ",")); err != nil {
+	if _, err = f.WriteString(strings.Join(column, ",") + "\n"); err != nil {
 		return err
 	}
 

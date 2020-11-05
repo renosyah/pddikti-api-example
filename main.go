@@ -117,6 +117,11 @@ var rootCmd = &cobra.Command{
 							log.Fatal(err)
 						}
 
+						colBasic := []string{d.ID, d.Nama, d.Nip, d.Pt, d.Jenjang, d.Prodi}
+						if err := addcol(fmt.Sprintf("dosen/%s/DataBasic.csv", d.Nama), colBasic); err != nil {
+							log.Fatal(err)
+						}
+
 					}); err != nil {
 						log.Fatal(err)
 					}
