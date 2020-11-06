@@ -36,6 +36,11 @@ var rootCmd = &cobra.Command{
 
 		if mode == MODE_BASIC {
 
+			col := []string{"ID", "NAMA", "NIP", "PERGURUAN TINGGI", "JENJANG", "PROGRAM STUDI"}
+			if err := addcol("dosen.csv", col); err != nil {
+				log.Fatal(err)
+			}
+
 			for _, v := range ls {
 				fmt.Println(fmt.Sprintf("Lecture name contain letter %c :", v))
 				err := reqDosen(fmt.Sprintf("%c", v), idst, func(d Dosen) {
@@ -73,6 +78,11 @@ var rootCmd = &cobra.Command{
 							log.Fatal(err)
 						}
 
+						coldmHeader := []string{"ID MATAKULIAH", "NOMOR KELAS", "KODE KELAS", "NAMA MATAKULIAH", "NAMA PERGURUAN TINGGI", "LINK PERGURUAN TINGGI"}
+						if err := addcol(fmt.Sprintf("dosen/%s/DataMengajar.csv", d.Nama), coldmHeader); err != nil {
+							log.Fatal(err)
+						}
+
 						for _, dm := range detail.Datamengajar {
 							col := []string{
 								dm.IDSmt,
@@ -87,6 +97,11 @@ var rootCmd = &cobra.Command{
 							}
 						}
 
+						coldpHeader := []string{"TAHUN LULUS", "NAMA SP FORMAL", "NAMA JENJANG", "SINGKAT GELAR"}
+						if err := addcol(fmt.Sprintf("dosen/%s/DataPendidikan.csv", d.Nama), coldpHeader); err != nil {
+							log.Fatal(err)
+						}
+
 						for _, dp := range detail.Datapendidikan {
 							col := []string{
 								fmt.Sprint(dp.ThnLulus),
@@ -97,6 +112,24 @@ var rootCmd = &cobra.Command{
 							if err := addcol(fmt.Sprintf("dosen/%s/DataPendidikan.csv", d.Nama), col); err != nil {
 								log.Fatal(err)
 							}
+						}
+
+						coldumumHeader := []string{
+							"ID SDM",
+							"NAMA SDM",
+							"JENIS KELAMIN",
+							"TEMPAT LAHIT",
+							"NAMA PERGURUAN TINGGI",
+							"LINK PERGURUAN TINGGI",
+							"LINK PRODI",
+							"NAMA PRODI",
+							"STATUS KEAKTIFAN",
+							"PENDIDIKAN TINGGI",
+							"FUNGSIONAL",
+							"IKATAN KERJA",
+						}
+						if err := addcol(fmt.Sprintf("dosen/%s/DataUmum.csv", d.Nama), coldumumHeader); err != nil {
+							log.Fatal(err)
 						}
 
 						col := []string{
@@ -114,6 +147,11 @@ var rootCmd = &cobra.Command{
 							detail.Dataumum.Ikatankerja,
 						}
 						if err := addcol(fmt.Sprintf("dosen/%s/DataUmum.csv", d.Nama), col); err != nil {
+							log.Fatal(err)
+						}
+
+						colBasicHeader := []string{"ID", "NAMA", "NIP", "PERGURUAN TINGGI", "JENJANG", "PROGRAM STUDI"}
+						if err := addcol(fmt.Sprintf("dosen/%s/DataBasic.csv", d.Nama), colBasicHeader); err != nil {
 							log.Fatal(err)
 						}
 
