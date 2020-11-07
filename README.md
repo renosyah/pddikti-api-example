@@ -4,14 +4,7 @@ Access dikti API and get lecturer data from all registered university in indones
 use by https://pddikti.kemdikbud.go.id and then print it to csv file
 
 <br>
-
-## Problem
-
-duplicate data in csv file
-
-<br>
-
-
+ 
 
 ## Disclaimer
 
