@@ -47,10 +47,15 @@ var rootCmd = &cobra.Command{
 
 					fmt.Println("Lecture name : ", d.Nama, " Added to dosen.csv")
 					col := []string{d.ID, d.Nama, d.Nip, d.Pt, d.Jenjang, d.Prodi}
-					if err := addcol("dosen.csv", col); err != nil {
+					exist, err := checkcol("dosen.csv", col)
+					if err != nil {
 						log.Fatal(err)
 					}
-
+					if !exist {
+						if err := addcol("dosen.csv", col); err != nil {
+							log.Fatal(err)
+						}
+					}
 				})
 				if err != nil {
 					log.Fatal(err)

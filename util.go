@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"os"
 	"strings"
 )
@@ -11,6 +12,27 @@ const (
 	MODE_BASIC   = "basic"
 	MODE_ADVANCE = "advance"
 )
+
+func checkcol(fname string, column []string) (bool, error) {
+
+	file, err := os.Open(fname)
+	if err != nil {
+		return false, err
+	}
+
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+
+	for scanner.Scan() {
+		if scanner.Text() == strings.Join(column, ",") {
+			return true, nil
+		}
+	}
+
+	return false, nil
+}
 
 func addcol(fname string, column []string) error {
 
